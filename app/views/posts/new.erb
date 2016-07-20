@@ -1,0 +1,24 @@
+<% if current_user %>
+    <div class="new-post">
+        <a href="/posts/new" class="button">New Post</a>
+    </div>
+<% end %>
+
+<h2> New Post</h2>
+
+<!--Error Display-->
+<ul class="errors">
+    <% @post.errors.full_messages.each do |message| %>
+        <li><% message %></li>
+    <% end %>
+</ul>
+
+<!--New Post-->
+    <form action="/posts" method="POST">
+        <div class="form-group">
+            <label for="photo_url">Photo URL</label> 
+            <input type="text" id="photo_url" name="photo_url">
+        <div class="form-group">
+            <button class="button" type="submit">Post</button>
+        </div>
+    </form>
