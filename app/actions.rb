@@ -6,8 +6,10 @@ end
 
 get '/' do
   @posts = Post.order(created_at: :desc)
+  # @current_user = User.find_by(id: session[:user_id])
   erb(:index)
 end
+
 
 get '/signup' do      # if a user navigates to the '/signup',
   @user = User.new    # creates new empty user object
@@ -47,6 +49,7 @@ post '/login' do
         erb(:login)
     end
   end
+
  
 get '/logout' do
   session[:user_id] = nil
@@ -59,14 +62,19 @@ end
 
 post '/posts' do
   photo_url = params[:photo_url]
+  
   @post = Post.new({ photo_url: photo_url, user_id: current_user.id })
   
   if @post.save
     redirect(to('/'))
-  
   else
-      @post.errors.full_messages.inspect
+      erb(:"posts/new")
   end
+end
+
+get '/posts/:id' do
   
+  @post = Post.find(params[:id]) 
+  erb(:"posts/show")
 end
   
